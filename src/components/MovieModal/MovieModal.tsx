@@ -5,7 +5,6 @@ import type { Movie } from "../../types/movie";
 
 interface ModalProps{
     onClose:()=>void;
-    // children:React.ReactNode;
      movie: Movie;
 }
 

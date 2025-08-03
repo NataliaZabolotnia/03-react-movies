@@ -7,7 +7,8 @@ import {useState} from "react";
 import type {Movie} from "../../types/movie";
 import Loader from "../Loader/Loader.tsx";
 import Error from "../ErrorMessage/ErrorMessage.tsx";
-import MovieModal from "../MovieModal/MovieModal"
+import MovieModal from "../MovieModal/MovieModal";
+import { fetchMovies } from "../../services/movieService"; 
 
 
 export default function App(){
@@ -18,10 +19,12 @@ export default function App(){
     const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
     const handleSearch= async(query:string)=>{
-        try{
         setMovies([]);
         setIsLoading(true);
         setIsError(false);
+
+        try{
+         const results = await fetchMovies(query);
         console.log("handleSearch:",query);
         
         const response=await axios.get(`https://api.themoviedb.org/3/search/movie?query=${query}`,{method: 'GET',
@@ -31,11 +34,11 @@ export default function App(){
     }});
         console.log(response.data);
 
-    if (response.data.results.length === 0){
+    if (results.length === 0){
         toast.error("No movies found for your request.");
         return;
     }
-    setMovies(response.data.results);
+    setMovies(results);
 }catch{
     setIsError(true);
 }finally{
