@@ -1,5 +1,4 @@
 import axios from "axios";
-import type { AxiosResponse } from "axios";
 import type { Movie } from "../types/movie";
 
 interface TMDBResponse {
@@ -16,7 +15,7 @@ export async function fetchMovies(query: string): Promise<Movie[]> {
     throw new Error("TMDB token is missing in environment variables.");
   }
 
-  const response: AxiosResponse<TMDBResponse> = await axios.get(
+  const response = await axios.get<TMDBResponse>(
     "https://api.themoviedb.org/3/search/movie",
     {
       headers: {

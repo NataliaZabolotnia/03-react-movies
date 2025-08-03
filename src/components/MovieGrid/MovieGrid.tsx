@@ -3,7 +3,7 @@ import type  {Movie} from "../../types/movie.ts";
 
 
 interface MovieGridProps{
-    onSelect:(movieId: number)=>void;
+    onSelect:(movie: Movie)=>void;
     movies:Movie[];
 }
 export default function MovieGrid({onSelect,movies}:MovieGridProps){
@@ -13,7 +13,7 @@ export default function MovieGrid({onSelect,movies}:MovieGridProps){
     return(
      <ul className={css.grid}>
   {movies.map((movie)=>(
-<li key={movie.id} onClick={() => onSelect(movie.id)}>
+<li key={movie.id} onClick={() => onSelect(movie)}>
     <div className={css.card}>
       <img 
 		    className={css.image} 
